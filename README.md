@@ -67,7 +67,7 @@ Django는 framework이다
 
 Replace Default User
 
-```tsx
+```python
 1. model == 데이터가 보여지는 모습 (데이터 테이블을 정의하는 것)
 
 2. class User(AbstractUser):
@@ -93,7 +93,7 @@ admin 페이지 에서 보여준 user에 관한 정보를 상속하여 확장한
 
 imageField는 Pillow 가 필요하다. `pip install Pillow`
 
-```tsx
+```python
 class User(AbstractUser):
 
     """Custom user model"""
@@ -151,7 +151,7 @@ null은 데이터 베이스를 위해서, blank는 form을 위해 사용된다.
 
 ### Custom Admin Pannel
 
-```tsx
+```python
 @admin.register(models.User)
 class CustomUserAdmin(admin.ModelAdmin):
 
@@ -159,4 +159,38 @@ class CustomUserAdmin(admin.ModelAdmin):
 
     list_display = ("username", "gender", "language", "currency", "superhost")
     list_filter = ("language", "superhost")
+```
+
+---
+
+### Extends Django Admin
+
+```python
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from . import models
+
+# Register your models here.
+
+@admin.register(models.User)
+class CustomUserAdmin(UserAdmin):
+
+    """Custom user admin"""
+
+    fieldsets = UserAdmin.fieldsets + (
+        (
+            "Custom Profile",
+            {
+                "fields": (
+                    "avatar",
+                    "gender",
+                    "bio",
+                    "birthdate",
+                    "language",
+                    "currency",
+                    "superhost",
+                )
+            },
+        ),
+    )
 ```
