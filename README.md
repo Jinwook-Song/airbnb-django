@@ -146,3 +146,17 @@ class User(AbstractUser):
 ```
 
 null은 데이터 베이스를 위해서, blank는 form을 위해 사용된다.
+
+---
+
+### Custom Admin Pannel
+
+```tsx
+@admin.register(models.User)
+class CustomUserAdmin(admin.ModelAdmin):
+
+    """Custom user admin"""
+
+    list_display = ("username", "gender", "language", "currency", "superhost")
+    list_filter = ("language", "superhost")
+```

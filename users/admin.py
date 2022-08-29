@@ -6,4 +6,8 @@ from . import models
 
 @admin.register(models.User)
 class CustomUserAdmin(admin.ModelAdmin):
-    pass
+
+    """Custom user admin"""
+
+    list_display = ("username", "gender", "language", "currency", "superhost")
+    list_filter = ("language", "superhost")
